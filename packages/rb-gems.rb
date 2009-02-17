@@ -2,14 +2,14 @@ require 'build_essential'
 
 module RubyGemsVerifier
   def has_rubygems(version)
-    @commands << "which gem && [ '#{version}' == `gem --version` ]"
+    @commands << "false && which gem > /dev/null && [ '#{version}' == `gem --version` ]"
   end
 end
 Sprinkle::Verify.register(RubyGemsVerifier)
 
 package :rubygems do
   description 'Ruby Gems'
-  version '1.3.1'
+  version 'blah'
   source "http://rubyforge.org/frs/download.php/45905/rubygems-1.3.1.tgz" do
     custom_install 'ruby setup.rb'
     post :install, 'ln -s /usr/bin/gem1.8 /usr/bin/gem'
@@ -18,9 +18,12 @@ package :rubygems do
     post :install, 'gem update --system'
   end
 
-  verify 'binary' do
-    has_file '/usr/bin/gem'
-    has_symlink '/usr/bin/gem', '/usr/bin/gem1.8'
+  # verify 'binary' do
+  #   has_file '/usr/bin/gem'
+  #   has_symlink '/usr/bin/gem'
+  # end
+  
+  verify 'version' do
     has_rubygems(version)
   end
 
