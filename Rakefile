@@ -2,7 +2,7 @@ require 'sprinkle'
 
 namespace :chef do
   %w(client server).each do |e|
-    desc "Build a #{e}-client from scratch"
+    desc "Build a chef-#{e} from scratch (with CHEF_HOST=your-server)"
     task e.to_sym do
       install(e)
     end
