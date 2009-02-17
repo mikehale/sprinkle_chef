@@ -10,7 +10,7 @@ namespace :chef do
 
   def install(what)
     raise "Must provide a CHEF_HOST=" unless ENV["CHEF_HOST"]
-    Sprinkle::OPTIONS[:force] = true
+    # Sprinkle::OPTIONS[:force] = true
     Sprinkle::Script.sprinkle script(what, ENV["CHEF_HOST"])
   end
 
