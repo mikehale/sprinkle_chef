@@ -1,0 +1,13 @@
+== INSTALL
+  sudo gem install sprinkle
+  git clone http://github.com/mikehale/sprinkle_chef
+  cd sprinkle_chef
+
+== USAGE
+
+Use sprinkle to bootstrap your chef server:
+  rake chef:server CHEF_HOST=your-chef-server
+
+Or client:
+  rake chef:client CHEF_HOST=your-chef-client
+  scp your-chef-server:/etc/chef/client.rb your-chef-client:/etc/chef/client.rb
