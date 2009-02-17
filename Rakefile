@@ -32,8 +32,8 @@ deployment do
 
   source do
     prefix   '/usr/local'
-    archives '/usr/local/sources'
-    builds   '/usr/local/build'
+    archives '/usr/local/src'
+    builds   '/usr/local/src'
   end
 end
     )
