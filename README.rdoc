@@ -14,5 +14,7 @@ Or client:
 
 == INFO
 
-The sprinkle script assumes that you can login to your servers as root without a password. 
-If you don't know how to do that start here: http://www.debian-administration.org/articles/530
+The sprinkle script assumes that you can login to your servers as root without a password.
+You can run `rake add_ssh_key CHEF_HOST=your-chef-host` to add your public key to root@CHEF_HOST.
+Take a look at {link this article}[http://www.debian-administration.org/articles/530] for more 
+information on passwordless logins with ssh.
