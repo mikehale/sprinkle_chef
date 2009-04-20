@@ -2,7 +2,6 @@ require 'rb-gems'
 
 package :chef_client do
   gem 'chef' do
-    pre :install, 'gem sources|grep opscode || gem sources -a http://gems.opscode.com'
     post :install, 'mkdir -p /etc/chef'
     post :install, %(cat > /etc/chef/solo.rb <<EOF
 log_level          :info

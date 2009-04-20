@@ -4,7 +4,7 @@ package :build_essential do
     pre :install, 'apt-get update'
   end
 
-  # verify do
-  #   has_executable 'gcc'
-  # end
+  verify do
+    has_executable 'gcc'
+  end
 end
