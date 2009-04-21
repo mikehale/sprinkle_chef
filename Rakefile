@@ -23,26 +23,28 @@ namespace :chef do
   def install(what)
     raise "Must provide a CHEF_HOST=" unless ENV["CHEF_HOST"]
     # Sprinkle::OPTIONS[:force] = true
-    # Sprinkle::OPTIONS[:verbose] = true
+    Sprinkle::OPTIONS[:verbose] = true
     # Sprinkle::OPTIONS[:test] = true
     Sprinkle::Script.sprinkle script(what, ENV["CHEF_HOST"])
   end
   
   def script(what, host)
     %(
-$LOAD_PATH << File.join(File.dirname(__FILE__), 'packages')
+require 'packages/build_essential'
+require 'packages/ruby'
+require 'packages/rubygems'
+require 'packages/chef_server'
+require 'packages/chef_client'
 
-require 'chef_#{what}'
-
-policy :chef_#{what}, :roles => :server do
+policy :chef_#{what}, :roles => :target do
   requires :chef_#{what}
 end
 
 deployment do
-  delivery :ssh do
-    roles(:server => '#{host}')
+  delivery :capistrano do
+    recipes 'deploy'
   end
-
+  
   source do
     prefix   '/usr/local'
     archives '/usr/local/src'
