@@ -10,10 +10,8 @@ package :rubygems do
     post :install, "gem update --system"
   end
 
-  # verify 'binary' do
-  #   has_file '/usr/bin/gem'
-  #   has_symlink '/usr/bin/gem', '/usr/bin/gem1.8'
-  # end
-
   requires :ruby
+  requires :zlibc
 end
+
+package(:zlibc) { apt "zlibc" }
