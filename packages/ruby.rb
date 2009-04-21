@@ -1,5 +1,5 @@
 package :ruby do
-  apt %w(ruby1.8)
+  apt %w(ruby)
 end
 
 package :ruby_dev do
