@@ -1,8 +1,3 @@
 package :ruby do
-  apt %w(ruby)
-end
-
-package :ruby_dev do
-  apt %w(ruby1.8-dev libopenssl-ruby1.8 rdoc1.8)
-  requires :ruby
+  source "ftp://ftp.ruby-lang.org/pub/ruby/1.8/ruby-1.8.6.tar.bz2"
 end

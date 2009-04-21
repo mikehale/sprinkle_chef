@@ -15,5 +15,5 @@ package :rubygems do
     has_symlink '/usr/bin/gem', '/usr/bin/gem1.8'
   end
 
-  requires :ruby_dev
+  requires :ruby
 end
