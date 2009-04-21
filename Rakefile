@@ -36,13 +36,17 @@ require 'packages/rubygems'
 require 'packages/chef_server'
 require 'packages/chef_client'
 
-policy :chef_#{what}, :roles => :target do
+policy :chef_#{what}, :roles => :#{what} do
   requires :chef_#{what}
 end
 
 deployment do
   delivery :capistrano do
-    recipes 'deploy'
+    @config.set :user, 'root'
+    @config.role :#{what}, '#{host}'
+    @config.set :run_method, :run
+    
+    @config.debug = true if ENV['DEBUG'] == 'true'
   end
   
   source do
