@@ -30,8 +30,7 @@ namespace :chef do
   end
   
   def script(what, host)
-    %(
-require 'packages/build_essential'
+    %(require 'packages/build_essential'
 require 'packages/ruby'
 require 'packages/rubygems'
 require 'packages/chef_server'
