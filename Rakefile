@@ -1,4 +1,5 @@
 require 'sprinkle'
+require 'lib/vmware'
 
 desc "Add your public ssh key to the server to support passwordless logins."
 task :add_ssh_key do
