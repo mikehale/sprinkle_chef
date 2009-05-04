@@ -1,16 +1,13 @@
 package :chef_server do
   gem 'chef-server' do
-    commands = []
-    commands << 'mkdir -p /etc/chef'
-    commands << 'mkdir -p /etc/chef'
-    commands << %(echo 'file_cache_path "/tmp/chef-solo"\\ncookbook_path "/tmp/chef-solo/cookbooks"' > ~/solo.rb)
+    post :install, create_or_replace_file('~/solo.rb',
+      ['file_cache_path "/tmp/chef-solo"',
+       'cookbook_path "/tmp/chef-solo/cookbooks"'])
+    post :install, create_or_replace_file('~/server.json', ['{ "recipes": "chef::server" }'])
     2.times {
-      commands << 'chef-solo -c ~/solo.rb -r http://s3.amazonaws.com/chef-solo/bootstrap-0.5.6.tar.gz'
+      post :install, 'chef-solo -c ~/solo.rb -j server.json -r http://s3.amazonaws.com/chef-solo/bootstrap-latest.tar.gz'
     }
-    commands << 'rm ~/solo.rb'
-    post :install, commands.join(' && ')
   end
-  requires :chef_client
   requires :rake
 end
 

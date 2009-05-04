@@ -1,7 +1,12 @@
 package :chef_client do
   gem 'chef' do
-    post :install, 'mkdir -p /etc/chef'
-    post :install, %(echo 'log_level :info\\nlog_location STDOUT\\nfile_cache_path "/tmp/chef-solo"\\ncookbook_path "/tmp/chef-solo/cookbooks"\\nChef::Log::Formatter.show_time = false' > /etc/chef/solo.rb)
+    post :install, create_or_replace_file('~/solo.rb',
+      ['file_cache_path "/tmp/chef-solo"',
+       'cookbook_path "/tmp/chef-solo/cookbooks"'])
+    post :install, create_or_replace_file('~/client.json', ['{ "recipes": "chef::client" }'])
+    2.times {
+      post :install, 'chef-solo -c ~/solo.rb -j ~/client.json -r http://s3.amazonaws.com/chef-solo/bootstrap-latest.tar.gz'
+    }
   end
   requires :rubygems
   requires :ohai
