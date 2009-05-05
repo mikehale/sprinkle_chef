@@ -8,9 +8,15 @@ package :chef_server do
       post :install, 'chef-solo -c ~/solo.rb -j server.json -r http://s3.amazonaws.com/chef-solo/bootstrap-latest.tar.gz'
     }
   end
+  requires :rubygems
   requires :rake
+  requires :chef_client_gem
 end
 
 package :rake do
   gem 'rake'
+end
+
+package :chef_client_gem do
+  gem 'chef'
 end
