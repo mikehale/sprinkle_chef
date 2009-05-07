@@ -6,15 +6,15 @@
 == USAGE
 
 Use sprinkle to bootstrap your chef server:
-  rake chef:server CHEF_HOST=your-chef-server
+  rake chef:server HOST=your-chef-server
 
 Or client:
-  rake chef:client CHEF_HOST=your-chef-client
+  rake chef:client HOST=your-chef-client
   scp your-chef-server:/etc/chef/client.rb your-chef-client:/etc/chef/client.rb
 
 == INFO
 
 The sprinkle script assumes that you can login to your servers as root without a password.
-You can run `rake add_ssh_key CHEF_HOST=your-chef-host` to add your public key to root@CHEF_HOST.
+You can run `rake add_ssh_key HOST=your-chef-host` to add your public key to root@HOST.
 Take a look at {this article}[http://www.debian-administration.org/articles/530] for more 
 information on passwordless logins with ssh.

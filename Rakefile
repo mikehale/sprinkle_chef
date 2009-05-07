@@ -1,8 +1,8 @@
 require 'sprinkle'
 
 task :host do
-  HOST = ENV['HOST'] ? ENV['HOST'] : ''
-  raise "Must provide a HOST=" if HOST.empty?
+  HOST = ENV['HOST'] if ENV['HOST']
+  raise "Must provide a HOST=" unless self.class.const_defined?('HOST')
 end
 
 desc "Add your public ssh key to the server to support passwordless logins (with HOST=your-server)"
@@ -15,7 +15,7 @@ task :add_ssh_key => :host do
   cmds = ["mkdir -p /root/.ssh/ -m 0600"]
   cmds << "echo \'#{public_key}\' > /root/.ssh/authorized_keys"
   puts cmds = "'#{cmds.join(' && ')}'"
-  print `ssh root@#{ENV["CHEF_HOST"]} #{cmds}`
+  print `ssh root@#{HOST} #{cmds}`
 end
 
 namespace :chef do
@@ -61,4 +61,3 @@ end
     )
   end
 end
-
