@@ -19,7 +19,7 @@ task :add_ssh_key => :host do
 end
 
 namespace :chef do
-  %w(client server).each do |e|
+  %w(client server solo).each do |e|
     desc "Build a chef-#{e} from scratch (with HOST=your-server)"
     task(e.to_sym => :host) { install(e) }
   end
@@ -38,6 +38,7 @@ require 'packages/ruby'
 require 'packages/rubygems'
 require 'packages/chef_server'
 require 'packages/chef_client'
+require 'packages/chef_solo'
 
 policy :chef_#{what}, :roles => :#{what} do
   requires :chef_#{what}
