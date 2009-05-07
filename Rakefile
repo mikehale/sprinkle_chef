@@ -1,9 +1,12 @@
 require 'sprinkle'
-require 'lib/vmware'
 
-desc "Add your public ssh key to the server to support passwordless logins."
-task :add_ssh_key do
-  raise "Must provide a CHEF_HOST=" unless ENV["CHEF_HOST"]
+task :host do
+  HOST = ENV['HOST'] ? ENV['HOST'] : ''
+  raise "Must provide a HOST=" if HOST.empty?
+end
+
+desc "Add your public ssh key to the server to support passwordless logins (with HOST=your-server)"
+task :add_ssh_key => :host do
   puts "Enter the path to your ssh public key [~/.ssh/id_rsa.pub]:"
   input = $stdin.gets.chomp
   public_key_path = input.empty? ? "~/.ssh/id_rsa.pub" : input
@@ -17,16 +20,15 @@ end
 
 namespace :chef do
   %w(client server).each do |e|
-    desc "Build a chef-#{e} from scratch (with CHEF_HOST=your-server)"
-    task(e.to_sym) { install(e) }
+    desc "Build a chef-#{e} from scratch (with HOST=your-server)"
+    task(e.to_sym => :host) { install(e) }
   end
 
   def install(what)
-    raise "Must provide a CHEF_HOST=" unless ENV["CHEF_HOST"]
     # Sprinkle::OPTIONS[:force] = true
     Sprinkle::OPTIONS[:verbose] = true
     # Sprinkle::OPTIONS[:test] = true
-    Sprinkle::Script.sprinkle script(what, ENV["CHEF_HOST"])
+    Sprinkle::Script.sprinkle script(what, HOST)
   end
   
   def script(what, host)
