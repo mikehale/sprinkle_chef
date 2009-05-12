@@ -28,6 +28,7 @@ namespace :chef do
     # Sprinkle::OPTIONS[:force] = true
     Sprinkle::OPTIONS[:verbose] = true
     # Sprinkle::OPTIONS[:test] = true
+    $LOAD_PATH << File.expand_path(File.dirname(__FILE__))
     Sprinkle::Script.sprinkle script(what, HOST)
   end
   
