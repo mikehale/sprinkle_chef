@@ -1,5 +1,5 @@
 package :ruby do
-  source "ftp://ftp.ruby-lang.org/pub/ruby/1.8/ruby-1.8.6.tar.bz2"
+  source "ftp://ftp.ruby-lang.org/pub/ruby/1.8/ruby-1.8.6-p369.tar.bz2"
   custom_install "./configure --prefix=/usr/local --with-openssl-dir=/usr --with-readline-dir=/usr --with-zlib-dir=/usr && make && make install"
   requires :zlib_dev
   requires :libssl_dev
