@@ -47,11 +47,11 @@ end
 
 deployment do
   delivery :capistrano do
-    @config.set :user, 'root'
-    @config.role :#{what}, '#{host}'
-    @config.set :run_method, :run
+    set :user, 'root'
+    role :#{what}, '#{host}'
+    set :run_method, :run
     
-    @config.debug = true if ENV['DEBUG'] == 'true'
+    debug = true if ENV['DEBUG'] == 'true'
   end
   
   source do
