@@ -6,14 +6,14 @@ class VirtualMachineTask < ::Rake::TaskLib
     @vm_path = vm_path
     @vm_name = vm_name
     @snapshot_name = snapshot_name
-    
+
     define
   end
-  
+
   def vmrun(cmd, *args)
     system("#{VMWare::VMRUN} #{cmd.to_s} #{@vm_path} #{args.join(' ')}")
   end
-  
+
   def define
     namespace :vmware do
       namespace @vm_name.to_sym do
@@ -27,7 +27,7 @@ class VirtualMachineTask < ::Rake::TaskLib
             vmrun(:start, :nogui)
           end
         end
-        
+
         [:stop, :reset, :suspend].each do |action|
           desc "soft #{action.to_s} the vm"
           task action do
@@ -40,20 +40,20 @@ class VirtualMachineTask < ::Rake::TaskLib
             end
           end
         end
-        
+
         [:pause, :unpause].each do |action|
           desc "#{action.to_s} the vm"
           task action do
             vmrun(action)
           end
         end
-        
+
         namespace :snapshot do
           desc "list snapshots"
           task :list do
             vmrun(:listSnapshots)
           end
-          
+
           desc "create snapshot"
           task :create do
             vmrun(:snapshot, @snapshot_name)
@@ -77,7 +77,7 @@ end
 
 class VMWare
   VMRUN = '/Library/Application\ Support/VMware\ Fusion/vmrun'
-  
+
   def initialize(base_dir)
     base_dir = Dir.new(File.expand_path(base_dir))
     available_vms = base_dir.find_all {|e| e =~ /vmwarevm$/}
