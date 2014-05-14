@@ -31,7 +31,7 @@ namespace :chef do
     $LOAD_PATH << File.expand_path(File.dirname(__FILE__))
     Sprinkle::Script.sprinkle script(what, HOST)
   end
-  
+
   def script(what, host)
     %(require 'packages/base'
 require 'packages/build_essential'
@@ -50,10 +50,10 @@ deployment do
     set :user, 'root'
     role :#{what}, '#{host}'
     set :run_method, :run
-    
+
     debug = true if ENV['DEBUG'] == 'true'
   end
-  
+
   source do
     prefix   '/usr/local'
     archives '/usr/local/src'
